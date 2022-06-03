@@ -131,7 +131,7 @@ internal class JsonMessageWriter : MessageWriter
 
         _writer.WriteString("title", FormatMarkdown(embed.Title));
         _writer.WriteString("url", embed.Url);
-        _writer.WriteString("timestamp", embed.Timestamp);
+        _writer.WriteString("timestamp", embed.Timestamp.HasValue ? Context.FormatDate(embed.Timestamp.Value) : null);
         _writer.WriteString("description", FormatMarkdown(embed.Description));
 
         if (embed.Color is not null)
@@ -256,9 +256,9 @@ internal class JsonMessageWriter : MessageWriter
         // Metadata
         _writer.WriteString("id", message.Id.ToString());
         _writer.WriteString("type", message.Kind.ToString());
-        _writer.WriteString("timestamp", message.Timestamp);
-        _writer.WriteString("timestampEdited", message.EditedTimestamp);
-        _writer.WriteString("callEndedTimestamp", message.CallEndedTimestamp);
+        _writer.WriteString("timestamp", Context.FormatDate(message.Timestamp));
+        _writer.WriteString("timestampEdited", message.EditedTimestamp.HasValue ? Context.FormatDate(message.EditedTimestamp.Value) : null);
+        _writer.WriteString("callEndedTimestamp", message.CallEndedTimestamp.HasValue ? Context.FormatDate(message.CallEndedTimestamp.Value) : null);
         _writer.WriteBoolean("isPinned", message.IsPinned);
 
         // Content
